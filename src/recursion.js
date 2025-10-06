@@ -4,32 +4,140 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
+
+/*
+Input: number
+Output: number
+Edge cases:
+- If number is negative?
+- If number is 0
+- If input isn't a number
+
+Base Case: If number = 1, return 1
+Recursive Case: If number > 1, return num time output of factorial(num - 1)
+*/
 var factorial = function(n) {
+  if (n < 0) {
+    return null;
+  } else if (n <= 1) {
+    return 1;
+  }
+  return n * factorial(n - 1);
 };
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
+
+/*
+Input: array
+Output: number
+Edge Cases:
+- If array is empty
+
+Base Case: If the array is 1 number return number
+Recursive Case: Add the first value to the second value and remove the first value from the array, then call with the number
+*/
 var sum = function(array) {
+  if (!array.length) {
+    return 0;
+  }
+  if (array.length <= 1) {
+    return array[0];
+  }
+  return array[0] + sum(array.slice(1));
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
+/*
+Input: array
+Output: number
+Edge Cases:
+-
+
+Base Case: If you hit an array 
+*/
 var arraySum = function(array) {
+  var flatArray = array.flat();
+  if (!flatArray.length) {
+    return 0;
+  }
+  if (flatArray.length <= 1) {
+    return array[0];
+  }
+  return array[0] + arraySum(array.slice(1));
 };
 
 // 4. Check if a number is even.
+
+/*
+Input: number
+Output: boolean
+Edge Cases:
+-
+
+Base Case: If num = -1 after subtracting 2, return false else return true.
+Recursive Case: If num > 0, subtrace 2 and call isEven.
+*/
 var isEven = function(n) {
+  if (n === 0) {
+    return true;
+  } else if (n === -1) {
+    return false;
+  }
+  if (n > 0) {
+    return isEven(n - 2);
+  } else if (n < 0) {
+    return isEven(n + 2);
+  }
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
+
+/*
+Input: number
+Output: number
+Edge Cases:
+-
+
+Base Case: If num = 1, return 1.
+Recursive Case: Return n + sumBelow(n -1).
+*/
 var sumBelow = function(n) {
+  if (n === 0) {
+    return 0;
+  } else if (n < 0) {
+    return n + 1 + sumBelow(n + 1);
+  }
+  return n - 1 + sumBelow(n - 1);
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
+
+/*
+Input: two numbers
+Output: array of numbers
+Edge Cases:
+-
+
+Base Case: If there are no numebrs between para 1 and 2, return array of nums
+Recursive Case: Check if 
+*/
 var range = function(x, y) {
+  if (!Array.isArray(x)) {
+    x = [x + 1, y - 1];
+    if (x[0] === x[1]) {
+      return [];
+    }
+    range(x, y);
+  } else {
+    return x.reduce((array, current) => {
+
+    }, [])
+  }
 };
 
 // 7. Compute the exponent of a number.
