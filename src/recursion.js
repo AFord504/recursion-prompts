@@ -127,17 +127,25 @@ Base Case: If there are no numebrs between para 1 and 2, return array of nums
 Recursive Case: Check if 
 */
 var range = function(x, y) {
-  if (!Array.isArray(x)) {
-    x = [x + 1, y - 1];
-    if (x[0] === x[1]) {
-      return [];
-    }
-    range(x, y);
-  } else {
-    return x.reduce((array, current) => {
-
-    }, [])
+  if (Math.abs(x - y) <= 1) {
+    return [];
   }
+  if (x < y) {
+    var array = [x + 1];
+    if (array.length !== Math.abs(x - y) - 1) {
+      array.push(range(x + 1, y));
+      array = array.flat();
+      return array;
+    }
+  } else if (x > y) {
+    var array = [x - 1];
+    if (array.length !== Math.abs(x - y) - 1) {
+      array.push(range(x - 1, y));
+      array = array.flat();
+      return array;
+    }
+  }
+  return array;
 };
 
 // 7. Compute the exponent of a number.
@@ -145,22 +153,74 @@ var range = function(x, y) {
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
+/*
+base case : exponent = 1
+return number
+
+recursive case: base*exponent(base,exponent-1) 
+
+
+*/
+
 var exponent = function(base, exp) {
+if(exp===0){return 1};
+if (exp === 1){return base}else if(exp>0){
+  return base*exponent(base,exp-1);
+}else{return exponent(base,exp+1)/base;}
+
 };
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
+/*
+base  case: number is less than one
+if number =1 return true else false
+recursive case: return function passing in number /2
+
+*/
 var powerOfTwo = function(n) {
+  if(n <=1){
+    if(n === 1){return true}else {return false;}
+  }else{return powerOfTwo(n/2)}
 };
 
 // 9. Write a function that accepts a string a reverses it.
-var reverse = function(string) {
+
+/*
+
+base case: check if string is empty
+-if so return empty string
+
+recursive: return last letter  and function passing in string with everything but the last letter
+
+*/
+
+var reverse = function(str) {
+if(!str.length){return ""}else{
+  return str[str.length-1]+reverse(str.slice(0,-1))
+}
+
 };
 
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function(string) {
+/*
+base case: str.length is <= 1
+return true
+recursive: check if
+
+*/
+var palindrome = function(str) {
+  str = str.replaceAll(/\s/g,'')
+if(str.length<=1){return true}else{
+  var fL = str[0].toLowerCase();
+  var lL = str[str.length-1].toLowerCase();
+
+  if(fL !== lL){return false}else{return palindrome(str.slice(1,-1))}
+}
+
+
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -174,12 +234,34 @@ var modulo = function(x, y) {
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
+/*
+base case: y = 1
+-return x
+recursive:
+return x + multiply(x, y-1)
+
+*/
+// if(y === 0){return 0}else if(y === 1){return x}else if(y<0) {
+//   if(x>=0){return x+multiply(x,y+1)}else{
+//     return (x+multiply(x,y+1))
+  
+//   }
+// }else{return x+multiply(x,y-1)}
 var multiply = function(x, y) {
+
+
+if(y === 0){return 0}
+if(y<0) return (-multiply(x,-y))
+  return x + multiply(x,y-1)
+
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
 var divide = function(x, y) {
+
+
+
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
@@ -196,15 +278,34 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+
+if(str1.length<=0 && str2.length<=0){return true}else{
+  var f1 = str1[0]
+  var f2 = str2[0]
+
+  if(f1 !== f2){return false}else{return compareStr(str1.slice(1),str2.slice(1))}
+
+}
+
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
-var createArray = function(str){
+var createArray = function(str, hol = []){
+  if(str.length === 0){return hol}else{
+    hol.push(str[0])
+    str = str.slice(1);
+    return createArray(str,hol)
+  }
 };
 
 // 17. Reverse the order of an array
-var reverseArr = function (array) {
+var reverseArr = function (arr,hol=[]) {
+   if(arr.length === 0){return hol}else{
+    hol.push(arr[arr.length-1])
+    arr = arr.slice(0,-1);
+    return reverseArr(arr,hol)
+  }
 };
 
 // 18. Create a new array with a given value and length.
