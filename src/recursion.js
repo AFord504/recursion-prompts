@@ -470,10 +470,10 @@ Recursive Case: If holder[obj.keys()[0]] exists then add 1 to it. If not, make i
 - return letterTally(first element of obj removed)
 */
 var letterTally = function(str, obj = {}) {
- if (!str) {
-  return obj;
- }
- if (obj)
+//  if (!str) {
+//   return obj;
+//  }
+//  if (holder)
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
