@@ -311,18 +311,55 @@ var reverseArr = function (arr,hol=[]) {
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
-var buildList = function(value, length) {
+/*
+Base Case: If arr = length
+- Return arr.
+Recursive Case: If arr < length
+- Push value to arr.
+*/
+var buildList = function(value, length, arr = []) {
+  if (arr.length === length) {
+    return arr;
+  }
+  arr.push(value)
+  return buildList(value, length, arr);
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
-var countOccurrence = function(array, value) {
+/*
+Base Case: If array = []
+- return count.
+Recursive Case: If array.length
+- Check if the first index = value
+- Return countOccurence(array.slice(1), value)
+*/
+var countOccurrence = function(array, value, count = 0) {
+  if (!array.length) {
+    return count;
+  }
+  if (array[0] === value) {
+    count++;
+  }
+  return countOccurrence(array.slice(1), value, count);
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
-var rMap = function(array, callback) {
+/*
+Base Case: If array.length = 0
+- Return holder.
+Recursive Case: If array.length != 0
+- Push function(callback())
+- return rMap(array.slice(1), callback)
+*/
+var rMap = function(array, callback, holder = []) {
+  if (!array.length) {
+    return holder;
+  }
+  holder.push(callback(array[0]));
+  return rMap(array.slice(1), callback, holder);
 };
 
 // 21. Write a function that counts the number of times a key occurs in an object.
@@ -357,18 +394,52 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var nthFibo = function(n) {
+/*
+Base Case: n = 0
+- return the last numeber of holder
+Recursive Case: 
+- return nthFibo(n - 1, holder)
+*/
+var nthFibo = function(n, holder = [0, 1]) {
+  if (n < 0) {
+    return null;
+  }
+  if (n === 0 && holder[holder.length - 2] === 0) {
+    return 0;
+  }
+  if (n === 0) {
+    return holder[holder.length - 2];
+  } 
+  holder.push(holder[holder.length - 2] + holder[holder.length - 1]);
+  return nthFibo(n - 1, holder);
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
-var capitalizeWords = function(input) {
+/*
+Base Case: If !input.length
+- return holder
+Recursive Case: 
+- holder.push(input[0].toUpperCase())
+- Return capitalizeWords(input.slice(1), holder)
+*/
+var capitalizeWords = function(input, holder = []) {
+  if (!input.length) {
+    return holder;
+  }
+  holder.push(input[0].toUpperCase());
+  return capitalizeWords(input.slice(1), holder);
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
-var capitalizeFirst = function(array) {
+var capitalizeFirst = function(array, holder = []) {
+  if (!array.length) {
+    return holder;
+  }
+  holder.push(array[0][0].toUpperCase() + array[0].slice(1));
+  return capitalizeFirst(array.slice(1), holder);
 };
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
@@ -380,6 +451,7 @@ var capitalizeFirst = function(array) {
 //   e: {e: {e: 2}, ee: 'car'}
 // };
 // nestedEvenSum(obj1); // 10
+
 var nestedEvenSum = function(obj) {
 };
 
@@ -390,7 +462,18 @@ var flatten = function(arrays) {
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function(str, obj) {
+/*
+Base Case: If !string
+- if !holder.keys().length
+- return 
+Recursive Case: If holder[obj.keys()[0]] exists then add 1 to it. If not, make it and set it to 1
+- return letterTally(first element of obj removed)
+*/
+var letterTally = function(str, obj = {}) {
+ if (!str) {
+  return obj;
+ }
+ if (obj)
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
