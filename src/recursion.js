@@ -465,15 +465,23 @@ var flatten = function(arrays) {
 /*
 Base Case: If !string
 - if !holder.keys().length
-- return 
-Recursive Case: If holder[obj.keys()[0]] exists then add 1 to it. If not, make it and set it to 1
+- return obj
+Recursive Case: If obj[first Letter] exists then add 1 to it. If not, make it and set it to 1
 - return letterTally(first element of obj removed)
 */
 var letterTally = function(str, obj = {}) {
-//  if (!str) {
-//   return obj;
-//  }
-//  if (holder)
+ if (!str) {
+  return obj;
+ }
+ var fL = str[0];
+ if (obj[fL]=== undefined){
+  obj[fL] = 1;
+ 
+ }else{
+  obj[fL]++;
+ }
+
+  return letterTally(str.slice(1),obj)
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
@@ -481,7 +489,39 @@ var letterTally = function(str, obj = {}) {
 // elements should not be changed.
 // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
 // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-var compress = function(list) {
+/*
+
+
+start first value
+look at next value
+check if values are same
+
+
+
+add first item to array
+ 
+check if next item in the array is equal to the last item in holder
+if so remove letter 
+if not push to holder and remove the letter
+return  compress
+
+stop when !list.length
+
+*/
+
+var compress = function(list,holder = []) {
+
+  if(list.length === 0){return holder}
+  fV = list[0];
+  if(!holder.length){holder.push(fV)}else{
+
+    if(fV !== holder[holder.length-1]){
+      holder.push(fV)
+    }
+  }
+  
+  return compress(list.slice(1),holder)
+
 };
 
 // 32. Augment every element in a list with a new value where each element is an array
@@ -493,20 +533,124 @@ var augmentElements = function(array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function(array) {
+var minimizeZeroes = function(list,holder = []) {
+
+   if(list.length === 0){return holder}
+  fV = list[0];
+  if(!holder.length){holder.push(fV)}else{
+
+    if(!(fV === holder[holder.length-1]&& holder[holder.length-1] === 0)){
+      holder.push(fV)
+    }
+  }
+  
+  return minimizeZeroes(list.slice(1),holder)
+
 };
+
+
+
+/*
+
+
+
+var minimizeZeroes = function(list,holder = []) {
+
+   if(list.length === 0){return holder}
+  fV = list[0];
+  if(!holder.length){
+  holder.push(fV)
+  
+  }else{
+lH = holder[holder.length-1];
+    if(!(fV === lH && lH === 0)){
+
+      holder.push(fV)
+    
+    }
+  }
+  
+  return minimizeZeroes(list.slice(1),holder)
+
+};
+
+
+
+
+*/
+
+
+
+
+
+
+
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function(array) {
+/*
+
+absolute the first value
+if holder = 0 push val
+else find if even or odd, if odd mltpy by -1;
+push val to holder
+return alt sign removing the first value
+if  array is empty push holder
+
+
+
+
+*/
+
+
+var alternateSign = function(list,holder = []) {
+
+   if(list.length === 0){return holder}
+  fV = Math.abs(list[0]);
+  if(!!holder.length){
+  
+
+    if(holder.length%2 !== 0){
+fV = fV*-1
+      
+    }
+  }
+  
+  holder.push(fV)
+  return alternateSign(list.slice(1),holder)
+
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
+
+/*
+make set of variables
+base case: !string.length
+
+grab first char 
+
+check if number replace it with the word from set
+return first letter + the rest
+
+
+*/
+
 var numToText = function(str) {
+  var map = ["zero","one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+
+if(str.length === 0) return str
+
+var fV = str[0];
+var rest = str.slice(1);
+
+if(map[fV]!== undefined){
+  return map[fV] + numToText(rest);
+}else return fV + numToText(rest);
+
 };
 
 // *** EXTRA CREDIT ***
